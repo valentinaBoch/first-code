@@ -5,7 +5,7 @@ int MaximumDiff(int numDay);
 
 main()
 {
-	int DayNumber, MaxDiff;
+	unsigned long int DayNumber, MaxDiff;
 
 	DayNumber = ReadFromFieDayNumber();	//читаем из файла за сколько дней 
 	MaxDiff = MaximumDiff(DayNumber); 	//заполняем массив и находим максимальну разницу значений
@@ -14,7 +14,7 @@ main()
 
 int ReadFromFieDayNumber ()
 {
-	int numDay;
+	unsigned long int numDay;
 	FILE *InputFile;
 	InputFile = fopen("input.txt","r");
 	if (InputFile == NULL) 
@@ -24,17 +24,14 @@ int ReadFromFieDayNumber ()
         }
 
 	fscanf(InputFile, "%d", &numDay);
-        printf("DayNumber=%d\n", numDay);
 	fclose(InputFile);
 	return numDay;
 }
 
-
-
-int MaximumDiff(int numDay)
+int MaximumDiff(unsigned long int numDay)
 {
-	int min, max, maxDiff=0;
-	int kurs[numDay];
+	unsigned long int min, max, maxDiff=0;
+	unsigned long int kurs[numDay];
 	int i = 0;
 	int ch;
 	FILE *InputFile;
@@ -44,7 +41,6 @@ int MaximumDiff(int numDay)
 		while (i<numDay)
 		{
 			fscanf(InputFile, "%d", &kurs[i]);
-			printf("kurs[%d]=%d\n", i, kurs[i]);
 			i++;
 		}
 
@@ -57,15 +53,20 @@ int MaximumDiff(int numDay)
 	}
 
 	maxDiff = max - min;
-	printf("maxDiff = %d; numDay = %d\n", maxDiff, numDay);
-
+	
 	return maxDiff;
 }
 
-void WriteToFieDayNumber (int MaxDiff)
+void WriteToFieDayNumber (unsigned long int MaxDiff)
 {
 	FILE *OutputFile;
 	OutputFile = fopen("ouput.txt","w");
-	fprintf(OutputFile, "%d\n", MaxDiff);
+	if (OutputFile == NULL) 
+        {
+                printf ("ERROR! File \"output.txt\" not found.\n");
+                exit(0);
+        }
+	fprintf(OutputFile, "%ld\n", MaxDiff);
+	printf("%ld\n", MaxDiff);
 	fclose(OutputFile);
 }
