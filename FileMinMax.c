@@ -1,20 +1,21 @@
 #include <stdio.h>
-unsigned long int ReadFromFieDayNumber ();///int numDay);
-void WriteToFieDayNumber (unsigned long int MaxDiff);
-unsigned long int MaximumDiff(unsigned long int numDay);
+
+unsigned int ReadFromFieDayNumber ();///int numDay);
+void WriteToFieDayNumber (unsigned int MaxDiff);
+unsigned int MaximumDiff(unsigned int numDay);
 
 main()
 {
-	unsigned long int DayNumber, MaxDiff;
+	unsigned int DayNumber, MaxDiff;
 
 	DayNumber = ReadFromFieDayNumber();	//читаем из файла за сколько дней 
 	MaxDiff = MaximumDiff(DayNumber); 	//заполняем массив и находим максимальну разницу значений
 	WriteToFieDayNumber(MaxDiff);           //пишем результат в файл
 }
 
-unsigned long int ReadFromFieDayNumber ()
+unsigned int ReadFromFieDayNumber ()
 {
-	unsigned long int numDay;
+	unsigned int numDay;
 	FILE *InputFile;
 	InputFile = fopen("input.txt","r");
 	if (InputFile == NULL) 
@@ -23,7 +24,7 @@ unsigned long int ReadFromFieDayNumber ()
                 exit(0);
         }
 
-	fscanf(InputFile, "%ld", &numDay);
+	fscanf(InputFile, "%d", &numDay);
 	fclose(InputFile);
 
 //	printf ("numDay = %ld\n",numDay);
@@ -31,10 +32,10 @@ unsigned long int ReadFromFieDayNumber ()
 	return numDay;
 }
 
-unsigned long int MaximumDiff(unsigned long int numDay)
+unsigned int MaximumDiff(unsigned int numDay)
 {
-	unsigned long int min, max, maxDiff=0;
-	unsigned long int kurs[numDay];
+	unsigned int min, max, maxDiff=0;
+	unsigned int kurs[numDay];
 	int i = 0;
 	int ch;
 	FILE *InputFile;
@@ -50,19 +51,19 @@ unsigned long int MaximumDiff(unsigned long int numDay)
 
 	while (ch = fgetc(InputFile) != '\n')
 		for (i=0; i<numDay; i++)
-		{
-			fscanf(InputFile, "%ld", &kurs[i]);
+//		{
+			fscanf(InputFile, "%d", &kurs[i]);
 //
 //			printf ("kurs[%d] = %ld\n", i, kurs[i]);
 //
-		}
+//		}
 
-       	fclose(InputFile);
+    fclose(InputFile);
 	min = max = kurs[0];
 	for (i=0; i<numDay; i++)
 	{
 		if (min > kurs[i]) min = kurs[i];
-       	        if (max < kurs[i]) max = kurs[i];
+       	if (max < kurs[i]) max = kurs[i];
 	}
 
 	maxDiff = max - min;
@@ -71,16 +72,16 @@ unsigned long int MaximumDiff(unsigned long int numDay)
 }
 
 
-void WriteToFieDayNumber (unsigned long int MaxDiff)
+void WriteToFieDayNumber (unsigned int MaxDiff)
 {
 	FILE *OutputFile;
 	OutputFile = fopen("ouput.txt","w");
 	if (OutputFile == NULL) 
-        {
-                printf ("ERROR! File \"output.txt\" not found.\n");
-                exit(0);
-        }
-	fprintf(OutputFile, "%ld\n", MaxDiff);
-	printf("%ld\n", MaxDiff);
+    {
+        printf ("ERROR! File \"output.txt\" not found.\n");
+        exit(0);
+    }
+	fprintf(OutputFile, "%d\n", MaxDiff);
+	printf("%d\n", MaxDiff);
 	fclose(OutputFile);
 }
