@@ -41,8 +41,6 @@ unsigned int MaximumDiff(unsigned int numDay)
 	FILE *InputFile;
 	InputFile = fopen("input.txt","r");
 
-	kurs[0]=0;
-
 	for (i=0; i<numDay; i++)
 //	{
 		kurs[i]=0;
