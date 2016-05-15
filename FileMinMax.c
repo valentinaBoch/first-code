@@ -1,7 +1,7 @@
 #include <stdio.h>
-int ReadFromFieDayNumber ();///int numDay);
-void WriteToFieDayNumber (int MaxDiff);
-int MaximumDiff(int numDay);
+unsigned long int ReadFromFieDayNumber ();///int numDay);
+void WriteToFieDayNumber (unsigned long int MaxDiff);
+unsigned long int MaximumDiff(unsigned long int numDay);
 
 main()
 {
@@ -12,7 +12,7 @@ main()
 	WriteToFieDayNumber(MaxDiff);           //пишем результат в файл
 }
 
-int ReadFromFieDayNumber ()
+unsigned long int ReadFromFieDayNumber ()
 {
 	unsigned long int numDay;
 	FILE *InputFile;
@@ -23,12 +23,15 @@ int ReadFromFieDayNumber ()
                 exit(0);
         }
 
-	fscanf(InputFile, "%d", &numDay);
+	fscanf(InputFile, "%ld", &numDay);
 	fclose(InputFile);
+
+//	printf ("numDay = %ld\n",numDay);
+
 	return numDay;
 }
 
-int MaximumDiff(unsigned long int numDay)
+unsigned long int MaximumDiff(unsigned long int numDay)
 {
 	unsigned long int min, max, maxDiff=0;
 	unsigned long int kurs[numDay];
@@ -36,12 +39,22 @@ int MaximumDiff(unsigned long int numDay)
 	int ch;
 	FILE *InputFile;
 	InputFile = fopen("input.txt","r");
-	
+
+	kurs[0]=0;
+
+	for (i=0; i<numDay; i++)
+//	{
+		kurs[i]=0;
+//              printf ("kurs[%d] = %ld\n", i, kurs[i]);
+//      }
+
 	while (ch = fgetc(InputFile) != '\n')
-		while (i<numDay)
+		for (i=0; i<numDay; i++)
 		{
-			fscanf(InputFile, "%d", &kurs[i]);
-			i++;
+			fscanf(InputFile, "%ld", &kurs[i]);
+//
+//			printf ("kurs[%d] = %ld\n", i, kurs[i]);
+//
 		}
 
        	fclose(InputFile);
@@ -53,9 +66,10 @@ int MaximumDiff(unsigned long int numDay)
 	}
 
 	maxDiff = max - min;
-	
+//	printf ("maxDiff = %ld\n", maxDiff);	
 	return maxDiff;
 }
+
 
 void WriteToFieDayNumber (unsigned long int MaxDiff)
 {
